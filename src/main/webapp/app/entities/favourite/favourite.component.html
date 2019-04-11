@@ -1,0 +1,37 @@
+<div>
+    <h2 id="page-heading">
+        <span>Favourites</span>
+        <button type="submit" 
+            class="btn btn-info float-right jh-create-entity create-random-fact" 
+            (click)="previousState()">
+            <fa-icon [icon]="'arrow-left'"></fa-icon>
+            <span >
+                Back
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="favourites">
+        <table class="table table-striped">
+            <tbody>
+            <tr *ngFor="let favourite of favourites ;trackBy: trackId">
+                <td><img src={{favourite.iconUrl}} width="25px"/></td>
+                <td>{{favourite.value}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="favourites && favourites.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

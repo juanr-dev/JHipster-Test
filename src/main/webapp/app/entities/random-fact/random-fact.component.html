@@ -1,0 +1,53 @@
+<div>
+    <div class="row">
+        <div class="col-md-9">
+            <h2 id="page-heading">
+                <span>Facts Dashboard</span>
+            </h2>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary float-right jh-create-entity create-random-fact" routerLink="../favourite">
+                <fa-icon [icon]="'heart'"></fa-icon>
+                <span >
+                    Show Favourites ({{favourites.length}})
+                </span>
+            </button>
+            <button class="btn btn-success jh-create-entity create-random-fact" (click)="loadAll()">
+                <fa-icon [icon]="'sync-alt'"></fa-icon>
+                <span >
+                    Refresh
+                </span>
+            </button>
+        </div>
+    </div>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="randomFacts">
+        <table class="table table-striped">
+            <tbody>
+            <tr *ngFor="let randomFact of randomFacts ;trackBy: trackId">
+                <td><img src={{randomFact.icon_url}} width="25px"/></td>
+                <td>{{randomFact.value}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                (click)="markAsFavourite(randomFact)"
+                                [disabled]="randomFact.isFavourite"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'heart'"></fa-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="randomFacts && randomFacts.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
